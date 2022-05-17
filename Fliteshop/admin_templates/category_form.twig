@@ -1,0 +1,20 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Новая категория{% endblock title%}
+
+{% block page_content %}
+    {{ form_start(categoryForm) }}
+    {{ form_row(categoryForm.parentId, {'label': 'ParentId: '}) }}
+    {{ form_row(categoryForm.name, {'label': 'Название: '}) }}
+    {{ form_row(categoryForm.url, {'label': 'Адрес страницы: '}) }}
+    {{ form_row(categoryForm.metaTitle, {'label': 'Заголовок: '}) }}
+    {{ form_row(categoryForm.metaKeywords, {'label': 'Ключевые слова: '}) }}
+    {{ form_row(categoryForm.metaDescription, {'label': 'Описание: '}) }}
+    {{ form_row(categoryForm.description, {'label': 'Полное описание: '}) }}
+    {{ form_row(categoryForm.image, {'label': 'Изображение: '}) }}
+    {{ form_row(categoryForm.visible, {'label': 'Активна: '}) }}
+    {{ form_row(categoryForm.position, {'label': 'Позиция: '}) }}
+    {{ form_row(categoryForm.externalId, {'label': 'externalId: '}) }}
+    <button type="submit">Сохранить</button>
+    {{ form_end(categoryForm) }}
+{% endblock page_content %}

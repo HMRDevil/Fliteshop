@@ -1,0 +1,38 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Купоны{% endblock %}
+
+{% block page_content %}
+    <H1>Купоны</h1>
+    <a href="{{ path('admin_coupon_add') }}">Добавить новый</a>
+    <div class="coupon-list">
+        {% for coupon in coupons %}
+        <div class="coupon-list-item {% if coupon.expire|date('Y m d')>=date('NOW')|date('Y m d') %}green{% endif %}">
+            <div class="coupon-list-item-name">
+                <a href="{{ path('admin_coupon_edit', {id: coupon.id}) }}">{{ coupon.code }}</a>
+            </div>
+            <div class="coupon-list-item-discount">
+                <p>Скидка по купону {{ coupon.value }}{% if coupon.type=='absolute' %}${% else %}%{% endif %}</p>
+                <p>Для заказов от {{ coupon.minOrderPrice }}$</p>
+            </div>
+            <div class="coupon-list-item-details">
+                {% if coupon.single %}
+                    <p>Одноразовый</p>
+                {% endif %}
+                {% if coupon.usages>0 %}
+                    <p>Использован {{ coupon.usages }} раз</p>
+                {% endif %}
+
+                {% if coupon.expire|date('Y m d')>=date('NOW')|date('Y m d') %}
+                    <p>Действует до {{ coupon.expire|date('d.m.Y') }}</p>
+                {% elseif coupon.expire|date('Y m d')<date('NOW')|date('Y m d') %}
+                    <p>Истек {{ coupon.expire|date('d.m.Y') }}</p>
+                {% endif %}
+            </div>
+            <div class="coupon-list-item-functions">
+                <a class="adm_delete" href="{{ path('admin_coupon_delete', {id: coupon.id}) }}">Удалить</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock page_content %}

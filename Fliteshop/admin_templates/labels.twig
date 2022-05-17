@@ -1,0 +1,19 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Метки{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_order') }}">Новые</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=1">Приняты</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=2">Выполнены</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=3">Удалены</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_label') }}">Метки</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_product_add') }}">Новая метка</a>
+{% endblock page_header %}
+
+{% block page_content %}
+    {{ dump(labels) }}
+{% endblock page_content %}

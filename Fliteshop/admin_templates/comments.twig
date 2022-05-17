@@ -1,0 +1,38 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Комментарии{% endblock %}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_comment') }}">Комментарии</a></li>
+{% endblock page_menu_items %}
+
+{% block page_content %}
+    <form method="post" action="{{ path('admin_comment') }}"">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_comment_search') }}">
+	<input class="search" type="search" name="search" value="{{ keywords }}">
+        <button class="search_button" type="submit">Поиск</button>
+    </form>
+    {{ knp_pagination_render(pagination) }}
+    
+    <form method="post" action="{{ path('admin_comment_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for comment in pagination %}
+            <div class="adm_blog">
+                <input type="checkbox" name="comments[]" value="{{ comment.id }}">
+                <p>{{ comment.name }}</p>
+                <p>{{ comment.text }}</p>
+                <p class="adm_blog_date">{{ comment.date|date('d m Y') }}</p>
+                <div class="adm_blog_functions">
+                    <a class="adm_blog_delete" href="{{ path('admin_comment_delete', {id: comment.id}) }}">Удалить</a>
+                </div>
+            </div><br>
+        {% endfor %}
+        <select name="action">
+                <option value="approved">Одобрить</option>
+                <option value="delete">Удалить</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+    
+    {{ knp_pagination_render(pagination) }}
+{% endblock page_content%}

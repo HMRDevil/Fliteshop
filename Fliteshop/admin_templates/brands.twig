@@ -1,0 +1,37 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Бренды{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item"><a href="{{ path('admin_product') }}">Товары</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_category') }}">Категории</a></li>
+    <li class="page-menu-item active"><a href="{{ path('admin_brand') }}">Бренды</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_feature') }}">Свойства</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_brand_add') }}">Добавить бренд</a>
+{% endblock page_header %}
+
+{% block page_content %}
+    
+    <form class="page-content" method="post" action="{{ path('admin_brand_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for brand in brands %}
+            <div class="product-content">
+                <input type="checkbox" name="categories[]" value="{{ brand.id }}">
+                <a href="{{ path('admin_brand_edit', {id: brand.id}) }}">{{ brand.name }}</a>
+                <div class="adm_functions">
+                    <a class="adm_delete" href="{{ path('admin_brand_delete', {id: brand.id}) }}">Удалить</a>
+{#                    <a href="{{ path('brand', {url: brand.url}) }}" target="_blank">Предпросмотр (новое окно)</a>  #}
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <select name="action">
+            <option value="delete">Удалить</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+    
+{% endblock page_content %}

@@ -1,0 +1,59 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Товары{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_product') }}">Товары</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_category') }}">Категории</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_brand') }}">Бренды</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_feature') }}">Свойства</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_product_add') }}">Добавить товар</a>
+    <form method="post" action="{{ path('admin_product') }}" class="page-header-item">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_product_search') }}">
+        <input class="search" type="search" name="search" value="{{ keywords }}">
+        <button class="search_button" type="submit">Поиск</button>
+    </form>
+{% endblock page_header %}
+
+{% block page_content %}
+    {{ knp_pagination_render(pagination) }}
+    
+    <form class="page-content" method="post" action="{{ path('admin_product_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for product in pagination %}
+            <div class="product-content">
+                <input type="checkbox" name="products[]" value="{{ product.id }}">
+                <img src="">
+                <input type="hidden" name="position[{{ product.id }}]" value="{{ product.position }}">
+                <div class="variants">
+                    {% for variant in product.variant %}
+                        <input type="text" class="{% if product.variant|first %} show {% else %} hidden {% endif %}" name="variant[{{ variant.id }}]" value="{{ variant.price }}">
+                    {% endfor %}
+                </div>
+                <a href="{{ path('admin_product_edit', {id: product.id}) }}">{{ product.name }}</a>
+                <div class="adm_functions">
+                    <a class="adm_delete" href="{{ path('admin_product_delete', {id: product.id}) }}">Удалить</a>
+                    <a href="{{ path('products', {url: product.url}) }}" target="_blank">Предпросмотр (новое окно)</a>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <select name="action">
+                <option value="visible">Сделать видимыми</option>
+                <option value="invisible">Сделать невидимыми</option>
+                <option value="recommended">Сделать рекомендуемыми</option>
+                <option value="inrecommended">Отменить рекомендуемый</option>
+                <option value="duplicate">Создать дубликат</option>
+                <option value="move_to_page">Переместить на страницу</option>
+                <option value="move_to_category">Переместить в категорию</option>
+                <option value="move_to_brand">Указать бренд</option>
+                <option value="delete">Удалить</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+    
+    {{ knp_pagination_render(pagination) }}
+{% endblock page_content %}

@@ -1,0 +1,31 @@
+{% extends theme~'/index.twig' %}
+
+{% block title %}Все товары{% endblock title %}
+
+{% block body %}
+    {% if keywords|length > 0 %}
+    <h2>Поиск {{ keywords }}</h2>
+    {% else %}
+    <h2>Все товары</h2>
+    {% endif %}
+    <article class="products">
+    {% for product in products %}
+        <article class="product">
+            <section class="product-content">
+                <a class="product-img" href="{{ path('product', {url: product.url}) }}">
+                    <img alt="{{ product.name }}" src="{{ asset('/upload/'~product.image|first.filename) }}">
+                </a>
+                <a class="product-link eternal-link" href="{{ path('product', {url: product.url}) }}">{{ product.name }}</a>
+            </section>
+            <form class="product-price" method="post">
+            {% for variant in product.variant %}
+                <label class="price"><input class="{% if product.variant|length == 1 %}hidden{% endif %}" type="radio" {% if product.variant|first %}checked {% endif %} name="variant" value="{{ variant.id }}">{{ variant.price }}</label>
+            {% endfor %}
+                <input class="addtocard" type="submit" value="В корзину">
+            </form>
+        </article>
+    {% endfor %}
+    </article>
+    
+    {{ knp_pagination_render(products) }}
+{% endblock body %}

@@ -1,0 +1,75 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_setting') }}">Настройки</a></li>
+    <li class="page-menu-item"><a href="">Валюты</a></li>
+    <li class="page-menu-item"><a href="">Доставка</a></li>
+    <li class="page-menu-item"><a href="">Оплата</a></li>
+    <li class="page-menu-item"><a href="">Менеджеры</a></li>
+{% endblock page_menu_items %}
+
+{% block page_content %}
+    <form method="post" action="{{ path('admin_setting') }}" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{ csrf_token('setting_save') }}">
+        <section class="block">
+            <h2>Настройки сайта</h2>
+            <div class="setting">
+                <label>Имя сайта</label><input name="site_name" type="text" value="{{ settings.site_name }}" />
+                <label>Имя компании</label><input name="company_name" type="text" value="{{ settings.company_name }}" />
+                <label>Формат даты</label><input name="date_format" type="text" value="{{ settings.date_format }}" />
+                <label>Email для восстановления пароля</label><input name="admin_email" type="email" value="{{ settings.admin_email }}" />
+            </div>
+        </section>
+        <section class="block">
+            <h2>Оповещения</h2>
+            <div class="setting">
+                <label>Оповещение о заказах</label><input name="order_email" type="email" value="{{ settings.order_email }}" />
+                <label>Оповещение о комментариях</label><input name="comment_email" type="email" value="{{ settings.comment_email }}" />
+                <label>Обратный адрес оповещений</label><input name="notify_from_email" type="email" value="{{ settings.notify_from_email }}" />
+            </div>
+        </section>
+        <section class="block">
+            <h2>Формат цены</h2>
+            <div class="setting">
+                <label>Разделитель копеек</label>
+                    <select name="decimals_point">
+                        <option value='.' {% if settings.decimals_point == '.' %}selected{% endif %}>точка: 12.45</option>
+                        <option value=',' {% if settings.decimals_point == ',' %}selected{% endif %}>запятая: 12,45</option>
+                    </select>
+                
+                <label>Разделитель тысяч</label>
+                    <select name="thousands_separator">
+                        <option value='' {% if settings.thousands_separator == '' %}selected{% endif %}>без разделителя: 1245678</option>
+                        <option value=' ' {% if settings.thousands_separator == ' ' %}selected{% endif %}>пробел: 1 245 678</option>
+                        <option value=',' {% if settings.thousands_separator == ',' %}selected{% endif %}>запятая: 1,245,678</option>
+                    </select>
+            </div>
+        </section>
+        <section class="block">
+            <h2>Настройки каталога</h2>
+            <div class="setting">
+                <label>Товаров на странице сайта</label><input name="products_num" type="number" value="{{ settings.products_num }}" />
+                <label>Товаров на странице админки</label><input name="products_num_admin" type="number" value="{{ settings.products_num_admin }}" />
+                <label>Максимум товаров в заказе</label><input name="max_order_amount" type="number" value="{{ settings.max_order_amount }}" />
+                <label>Единицы измерения товаров</label><input name="units" type="text" value="{{ settings.units }}" />
+            </div>
+        </section>
+        <section class="block">
+            <h2>Изображения товаров</h2>
+            <div class="setting">
+                <label>Водяной знак</label>
+                    <input name="watermark_file" type="file" />
+
+                    <img style='display:block; border:1px solid #d0d0d0; margin:10px 0 10px 0;' src="{$config->root_url}/{$config->watermark_file}?{math equation='rand(10,10000)'}">
+                
+                <label>Горизонтальное положение водяного знака %</label><input name="watermark_offset_x" type="number" value="{{ settings.watermark_offset_x }}" />
+                <label>Вертикальное положение водяного знака %</label><input name="watermark_offset_y" type="number" value="{{ settings.watermark_offset_y }}" />
+                <label>Прозрачность знака (больше &mdash; прозрачней) %</label><input name="watermark_transparency" type="number" value="{{ settings.watermark_transparency }}" />
+                <label>Резкость изображений (рекомендуется 20%) %</label><input name="images_sharpen" type="number" value="{{ settings.images_sharpen }}" />
+            </div>
+        </section>
+        <button type="submit">Сохранить</button>
+    </form>
+{% endblock page_content %}

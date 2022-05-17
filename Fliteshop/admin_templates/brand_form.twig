@@ -1,0 +1,16 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Новый бренд{% endblock title%}
+
+{% block page_content %}
+    {{ form_start(brandForm) }}
+    {{ form_row(brandForm.name, {'label': 'Название: '}) }}
+    {{ form_row(brandForm.url, {'label': 'Адрес страницы: '}) }}
+    {{ form_row(brandForm.metaTitle, {'label': 'Заголовок: '}) }}
+    {{ form_row(brandForm.metaKeywords, {'label': 'Ключевые слова: '}) }}
+    {{ form_row(brandForm.metaDescription, {'label': 'Описание: '}) }}
+    {{ form_row(brandForm.description, {'label': 'Краткое описание: '}) }}
+    {{ form_row(brandForm.image, {'label': 'Изображение: '}) }}
+    <button type="submit">Сохранить</button>
+    {{ form_end(brandForm) }}
+{% endblock page_content %}

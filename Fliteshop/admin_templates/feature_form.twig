@@ -1,0 +1,19 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Новое свойство{% endblock title%}
+
+{% block page_content %}
+    {{ form_start(featureForm) }}
+    <div class="rigth_column">
+    {{ form_row(featureForm.name, {'label': 'Название: '}) }}
+    {{ form_row(featureForm.position, {'label': 'Позиция: '}) }}
+    {{ form_row(featureForm.inFilter, {'label': 'Использовать в фильтре: '}) }}
+    </div>
+    <div class="left_column">
+    {% for category in featureForm.categories %}
+        {{ form_row(category) }}
+    {% endfor %}
+    </div>
+    <button type="submit">Сохранить</button>
+    {{ form_end(featureForm) }}
+{% endblock page_content %}

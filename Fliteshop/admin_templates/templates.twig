@@ -1,0 +1,77 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Шаблоны{% endblock %}
+
+{% block page_menu_items %}
+    <li class="page-menu-item"><a href="{{ path('admin_design') }}">Темы</a></li>
+    <li class="page-menu-item active"><a href="{{ path('admin_template') }}">Шаблоны</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_style') }}">Стили</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    {% for template in templates %}
+        <a class="page-header-item tmpl-item {% if tmplName == template %} tmpl-item-active {% endif %}" href="{{ path('admin_template', {tmplName: template}) }}"">{{ template }}</a>
+    {% endfor %}
+{% endblock page_header %}
+
+{% block page_content %}
+    <p>Тема {{ theme }}, шаблон <span class="nameTmpl">{{ tmplName }}</span></p>
+    <form class="page-content" method="post" action="{{ path('admin_template') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('template_save') }}">
+        <input type="hidden" name="tmplName" class="nameTmpl" value="{{ tmplName }}">
+        <textarea id="textarea" name="tmplBody">{{ tmplBody }}</textarea>
+        <button type="submit">Сохранить</button>
+    </form>
+    
+{% endblock page_content %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        form.page-header-item
+        {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('admin/js/library/codemirror/lib/codemirror.css') }}">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    <script src="{{ asset('admin/js/library/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('admin/js/library/codemirror/lib/codemirror.js') }}"></script>
+    <script src="{{ asset('admin/js/library/codemirror/mode/twig/twig.js') }}" ></script>
+    <script src="{{ asset('admin/js/library/codemirror/mode/xml/xml.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            const route = "{{ path('admin_template')|escape('js') }}";
+            var editor = CodeMirror.fromTextArea(document.getElementById('textarea'), {
+		mode: "twig",
+		lineNumbers: true,
+		styleActiveLine: true,
+		matchBrackets: false,
+		enterMode: 'keep',
+		indentWithTabs: false,
+		indentUnit: 1,
+		tabMode: 'classic'
+            });
+            $('.tmpl-item').on('click', function(e)
+            {
+                e.preventDefault();
+                $('.tmpl-item').removeClass('tmpl-item-active');
+                $(this).addClass('tmpl-item-active');
+                var tmplName = $(this).text();
+                $.get(
+                        route,
+                        {tmplName: $(this).text()})
+                    .done(function(data)
+                    {
+                        $('#textarea').val(data);
+                        editor.doc.setValue(data);
+                        $('span.nameTmpl').text(tmplName);
+                        $('input.nameTmpl').val(tmplName);
+                    });
+            });
+        });
+    </script>
+{% endblock javascripts %}

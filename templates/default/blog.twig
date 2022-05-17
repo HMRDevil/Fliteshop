@@ -1,0 +1,19 @@
+{% extends theme~'/index.twig' %}
+
+{% block title %}Блог{% endblock title %}
+
+{% block body %}
+<h1>БЛОГ</h1>
+
+{{ knp_pagination_render(pagination) }}
+
+{% for blog in pagination %}
+<div class="blog-post">
+    <a href="{{ path('blog_post', {url: blog.url}) }}">{{ blog.name }}</a>
+    <p class="blog-post-date">{{ blog.date|date('d m Y') }}</p>
+    <p class="blog-post-text">{{ blog.annotation|raw}}</p>
+</div>
+{% endfor %}
+
+{{ knp_pagination_render(pagination) }}
+{% endblock body %}

@@ -1,0 +1,49 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Блог{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_blog') }}">Блог</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_blog_add') }}">Добавить запись</a>
+    <form method="post" action="{{ path('admin_blog') }}" class="page-header-item">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_blog_search') }}">
+        <input class="search" type="search" name="search" value="{{ keywords }}">
+        <button class="search_button" type="submit">Поиск</button>
+    </form>
+{% endblock page_header %}
+
+{% block page_content %}
+    {{ knp_pagination_render(pagination) }}
+    
+    <form class="page-content" method="post" action="{{ path('admin_blog_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for blog in pagination %}
+            <div class="blog-content">
+                <input type="checkbox" name="blogs[]" value="{{ blog.id }}">
+                <a href="{{ path('admin_blog_edit', {id: blog.id}) }}">{{ blog.name }}</a>
+                <p class="adm_blog_date">{{ blog.date|date('d m Y') }}</p>
+                <div class="adm_blog_functions">
+                    <a class="adm_blog_delete" href="{{ path('admin_blog_delete', {id: blog.id}) }}">Удалить</a>
+                    {% if blog.visible == true %}
+                    <a class="adm_blog_visible adm_blog_visible_true" href="{{ path('admin_blog_visible', {id: blog.id}) }}">Скрыть</a>
+                    {% else %}
+                    <a class="adm_blog_visible adm_blog_visible_false" href="{{ path('admin_blog_visible', {id: blog.id}) }}">Показать</a>
+                    {% endif %}
+                    <a href="{{ path('blog_post', {url: blog.url}) }}" target="_blank">Предпросмотр (новое окно)</a>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <select name="action">
+                <option value="visible">Сделать видимыми</option>
+                <option value="invisible">Сделать невидимыми</option>
+                <option value="delete">Удалить</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+        
+    {{ knp_pagination_render(pagination) }}
+{% endblock page_content %}

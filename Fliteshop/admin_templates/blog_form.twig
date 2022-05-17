@@ -1,0 +1,19 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Блог{% endblock title%}
+
+{% block page_content %}
+    <H1>БЛОГ</h1>
+    {{ form_start(blogForm) }}
+    {{ form_row(blogForm.name, {'label': 'Название: '}) }}
+    {{ form_row(blogForm.url, {'label': 'Адрес страницы: '}) }}
+    {{ form_row(blogForm.metaTitle, {'label': 'Тitle: '}) }}
+    {{ form_row(blogForm.metaKeywords, {'label': 'Keywords: '}) }}
+    {{ form_row(blogForm.metaDescription, {'label': 'Description: '}) }}
+    {{ form_row(blogForm.annotation, {'label': 'Краткое описание: '}) }}
+    {{ form_row(blogForm.text, {'label': 'Полное описание: '}) }}
+    {{ form_row(blogForm.visible, {'label': 'Видимость: '}) }}
+    {{ form_row(blogForm.date, {'label': 'Дата добавления: '}) }}
+    <button type="submit">Запостить</button>
+    {{ form_end(blogForm) }}
+{% endblock page_content %}

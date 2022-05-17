@@ -1,0 +1,17 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Купоны{% endblock title%}
+
+{% block page_content %}
+    <H1>Новый купон</h1>
+    {{ form_start(couponForm) }}
+    {{ form_row(couponForm.code, {'label': false }) }}
+    {{ form_row(couponForm.expires, {'label': 'Истекает: '}) }}
+    {{ form_row(couponForm.expire, {'label': false }) }}
+    {{ form_row(couponForm.type, {'label': false }) }}
+    {{ form_row(couponForm.value, {'label': 'Скидка: '}) }}
+    {{ form_row(couponForm.minOrderPrice, {'label': 'Для заказов от ($): '}) }}
+    {{ form_row(couponForm.single, {'label': 'Одноразовый: '}) }}
+    <button type="submit">Добавить</button>
+    {{ form_end(couponForm) }}
+{% endblock page_content %}

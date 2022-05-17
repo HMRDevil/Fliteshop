@@ -1,0 +1,264 @@
+@import "reset.css";
+
+body
+{
+    background: #e8dcdc;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+h2
+{
+    margin-bottom: 20px;
+}
+
+ul,
+ol,
+li
+{
+    list-style: none;
+}
+
+.wrapper
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.content,
+.main
+{
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+.footer,
+.header,
+.header-menu,
+.header-menu-right,
+.header-menu-left,
+.postheader,
+.main,
+.main-menu,
+.main-content
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.main-menu,
+.main-content
+{
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+.main-menu
+{
+    width: 30%;
+    margin-right: 30px;
+}
+
+.main-menu-item
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+}
+
+.main-menu-search
+{
+    margin-bottom: 20px;
+}
+
+.main-menu-brands
+{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.category .category
+{
+    margin-left: 30px;
+}
+
+.main-menu-currencies
+{
+    visibility: hidden;
+}
+
+.main-content
+{
+    width: 100%;
+}
+
+.footer
+{
+    flex: 0 0 auto;
+    margin-top: 50px;
+    margin-bottom: 25px;
+}
+
+.header-menu,
+.header-menu-right,
+.header-menu-left,
+.postheader
+{
+    justify-content: space-between;
+}
+
+.header-menu
+{
+    margin-top: 1.5vh;
+    width: 100%;
+}
+
+.header-menu-left
+{
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.header-menu-right
+{
+    justify-content: flex-end;
+}
+
+.header-menu-item{
+    margin-left: 25px;
+}
+
+.menu-item-link, .menu-item-link:after, .menu-item-link:before
+{
+    color: #574f4f;
+}
+
+.postheader
+{
+    height: 180px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.postheader-logo
+{
+    width: 30%;
+}
+
+.postheader-contacts, .postheader-contacts-tel, .postheader-contacts-address
+{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    text-align: right;
+}
+
+.postheader-contacts-tel, .postheader-contacts-address
+{
+    height: 50%;
+    justify-content: flex-end;
+}
+
+.postheader-contacts-address
+{
+    justify-content: flex-start;
+}
+
+.products
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.product
+{
+    background-color: #eae0e0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    margin-bottom: 12px;
+    margin-right: 3.33%;
+    width: 30%;
+}
+
+.product-content
+{
+    height: 75%;
+    margin-bottom: 5%;
+}
+
+.product-img
+{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+}
+
+.product-img img
+{
+    max-height: 100%;
+}
+
+.product-price
+{
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    justify-content: space-between;
+}
+
+.product-link,
+.price
+{
+    margin-left: 12px;
+}
+
+.price
+{
+    
+}
+
+.hidden
+{
+    display: none;
+}
+
+.addtocard
+{
+    align-self: center;
+    margin-bottom: 15px;
+}
+
+.fliteshop
+{
+    color: #0fadd9;
+    font-size: 24px;
+}
+
+.phone,
+.phone:visited,
+.phone:after,  .eternal-link:visited
+{
+    color: #0000FF;
+}
+
+.phone
+{
+    font-size: 20px;
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+        <title>{% block title %}FliteShop CMS{% endblock title%}</title>
+        <link rel="stylesheet" href="{{ asset(theme~'/css/main.css') }}">
+
+        {% block stylesheets %}{% endblock stylesheets%}
+        {% block javascripts %}{% endblock javascripts%}
+    </head>
+    <body class="wrapper">
+        <div class="content">
+            <header class="header">
+                <nav class="header-menu">
+                    <ul class="header-menu-left">
+                        <li class="header-menu-item"><a class="menu-item-link" href="/">Главная</a><li>
+                        <li class="header-menu-item"><a class="menu-item-link" href="{{ path('blog') }}">Блог</a><li>
+                        <li class="header-menu-item"><a class="menu-item-link" href="">Доставка</a><li>
+                        <li class="header-menu-item"><a class="menu-item-link" href="">Оплата</a><li>
+                        <li class="header-menu-item"><a class="menu-item-link" href="">Контакты</a><li>
+                    </ul>
+                    <ul class="header-menu-right">
+                        <li class="header-menu-item"><a class="menu-item-link" href="">Регистрация</a><li>
+                        <li class="header-menu-item"><a class="menu-item-link" href="{{ path('app_login') }}">Вход</a><li>
+                    </ul>
+                </nav>
+            </header>
+            <div class="postheader">
+                <a href="/" class="postheader-logo"><img src="{{ asset(theme~'/images/logo.svg') }}" alt="Shoplogo"> </a>
+                <div class="postheader-contacts">
+                    <a class="postheader-contacts-tel phone" href="tel:8-800-3567-777">8-800-3567-777</a>
+                    <p class="postheader-contacts-address">Москва, Проспект Вернадского, 86</p>
+                </div>
+            </div>
+            <div class="main">
+                <nav class="main-menu">
+                    <form class="main-menu-item main-menu-search" method="post" action="{{ path('products') }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('product_search') }}">
+                        <input class="search" type="search" name="keywords" value="{{ keywords }}">
+                        <button class="search_button" type="submit">Поиск</button>
+                    </form>
+                    <section class="main-menu-item">
+                        {% for category in categories %}
+                        <div class="category">
+                            <a class="eternal-link{% if category.parentId > 0 %} category{% endif %}" href="{{ path('category', {url: category.url}) }}">{{ category.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </section>
+                    <h2 class="main-menu-item">Все бренды:</h2>
+                    <section class="main-menu-item main-menu-brands">
+                        {% for brand in brands %}
+                            <a class="eternal-link brand" href="{{ path('brand', {url: brand.url}) }}">{{ brand.name }}</a>
+                        {% endfor %}
+                    </section>
+                    <section class="main-menu-item main-menu-currencies">
+                    </section>
+                </nav>
+                <div class="main-content">
+                    {% block body %}
+                        <h2>О магазине</h2>
+                        <p>Этот магазин является демонстрацией скрипта интернет-магазина <a class="eternal-link" href="">FliteShop CMS</a>. Все материалы на этом сайте присутствуют исключительно в демострационных целях.</p>
+                        <h2>Рекомендуемые товары</h2>
+                        <article class="products">
+                        {% for product in recommended %}
+                            <article class="product">
+                                <section class="product-content">
+                                    <a class="product-img" href="{{ path('product', {url: product.url}) }}">
+                                        <img alt="{{ product.name }}" src="{{ asset('/upload/'~product.image|first.filename) }}">
+                                    </a>
+                                    <a class="product-link eternal-link" href="{{ path('product', {url: product.url}) }}">{{ product.name }}</a>
+                                </section>
+                                <form class="product-price" method="post">
+                                {% for variant in product.variant %}
+                                    <label class="price"><input class="{% if product.variant|length == 1 %}hidden{% endif %}" type="radio" {% if product.variant|first %}checked {% endif %} name="variant" value="{{ variant.id }}">{{ variant.price }}</label>
+                                {% endfor %}
+                                    <input class="addtocard" type="submit" value="В корзину">
+                                </form>
+                            </article>
+                        {% endfor %}
+                        </article>
+                        <h2>Новинки</h2>
+                        <article class="products">
+                        {% for product in thing %}
+                            <article class="product">
+                                <section class="product-content">
+                                    <a class="product-img" href="{{ path('product', {url: product.url}) }}">
+                                        <img alt="{{ product.name }}" src="{{ asset('/upload/'~product.image|first.filename) }}">
+                                    </a>
+                                    <a class="product-link eternal-link" href="">{{ product.name }}</a>
+                                </section>
+                                <form class="product-price" method="post">
+                                {% for variant in product.variant %}
+                                    <label class="price"><input class="{% if product.variant|length == 1 %}hidden{% endif %}" type="radio" {% if product.variant|first %}checked {% endif %} name="variant" value="{{ variant.id }}">{{ variant.price }}</label>
+                                {% endfor %}
+                                    <input class="addtocard" type="submit" value="В корзину">
+                                </form>
+                            </article>
+                        {% endfor %}
+                        </article>
+                        <h2>Акционные товары</h2>
+                        <article class="products">
+                        {% for product in stock %}
+                            <article class="product">
+                                <section class="product-content">
+                                    <a class="product-img" href="{{ path('product', {url: product.url}) }}">
+                                        <img alt="{{ product.name }}" src="{{ asset('/upload/'~product.image|first.filename) }}">
+                                    </a>
+                                    <a class="product-link eternal-link" href="">{{ product.name }}</a>
+                                </section>
+                                <form class="product-price" method="post">
+                                {% for variant in product.variant %}
+                                    <label class="price"><input class="{% if product.variant|length == 1 %}hidden{% endif %}" type="radio" {% if product.variant|first %}checked {% endif %} name="variant" value="{{ variant.id }}">{{ variant.price }}</label>
+                                {% endfor %}
+                                    <input class="addtocard" type="submit" value="В корзину">
+                                </form>
+                            </article>
+                        {% endfor %}
+                        </article>
+                    {% endblock body %}
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <a class="phone" href="tel:8-800-3567-777">8-800-3567-777</a>
+            <p class="fliteshop">Powered by <a class="eternal-link" href="/gfh">FliteShop CMS</a></p>
+        </footer>
+    </body>
+</html>

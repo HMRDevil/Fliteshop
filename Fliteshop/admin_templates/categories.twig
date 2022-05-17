@@ -1,0 +1,39 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Категории{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item"><a href="{{ path('admin_product') }}">Товары</a></li>
+    <li class="page-menu-item active"><a href="{{ path('admin_category') }}">Категории</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_brand') }}">Бренды</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_feature') }}">Свойства</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_category_add') }}">Добавить категорию</a>
+{% endblock page_header %}
+
+{% block page_content %}
+    
+    <form class="page-content" method="post" action="{{ path('admin_category_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for category in categories %}
+            <div class="product-content">
+                <input type="checkbox" name="categories[]" value="{{ category.id }}">
+                <a href="{{ path('admin_category_edit', {id: category.id}) }}">{{ category.name }}</a>
+                <div class="adm_functions">
+                    <a class="adm_delete" href="{{ path('admin_category_delete', {id: category.id}) }}">Удалить</a>
+{#                    <a href="{{ path('category', {url: category.url}) }}" target="_blank">Предпросмотр (новое окно)</a>  #}
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <select name="action">
+            <option value="visible">Сделать видимыми</option>
+            <option value="invisible">Сделать невидимыми</option>
+            <option value="delete">Удалить</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+    
+{% endblock page_content %}

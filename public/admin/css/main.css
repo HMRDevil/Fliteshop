@@ -1,0 +1,259 @@
+@import "reset.css";
+
+body
+{
+    background-color: #708090;
+    background-image: url(../images/bgd.jpg);
+    background-repeat: repeat;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+textarea
+{
+    height: 500px;
+    resize: none;
+    width: 100%;
+}
+
+ul, ol, li
+{
+    list-style: none;
+}
+
+.header
+{
+    height: 120px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 85%;
+}
+
+.header-logo
+{
+    margin: 15px;
+    width: 250px;
+    height: 100%;
+}
+
+.header-logo a
+{
+    width: 100%;
+    height: 100%;
+}
+
+.logo
+{
+    width: 100%;
+    height: 80%;
+}
+
+.logo-caption
+{
+    height: 20%;
+    font: 25px cursive;
+}
+
+.header-link
+{
+    align-self: center;
+}
+
+.nav-menu
+{
+    width: 100%;
+}
+
+.nav-menu ul
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nav-menu-item
+{
+    display: flex;
+    width: 100%;
+    text-align: center;
+}
+
+.nav-menu-item a
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.menu-item-img
+{
+    width: 48px;
+    height: 48px;
+    align-self: center;
+}
+
+.wrapper
+{
+    width: 70%;
+    margin: auto;
+    padding: 30px;
+    flex-direction: column;
+}
+
+.page-menu
+{
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.page-menu ul
+{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.page-menu-item
+{
+    align-self: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    border-bottom: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    padding: 0 5px;
+    margin-right: 10px;
+    width: 20%;
+}
+
+.active
+{
+    box-shadow: 7px -10px rgba(116, 129, 154, 0.6);
+    margin-bottom: 3px;
+}
+
+.page-header
+{
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.page-header-item
+{
+    max-width: 20%;
+    margin: 10px;
+}
+
+.tmpl-item
+{
+    background-color: rgba(234, 226, 230, 0.6);
+    border: 2px solid rgba(225, 213, 219, 0.6);
+    padding: 5px 10px;
+    height: 40px;
+    width: auto;
+}
+
+.tmpl-item-active
+{
+    background-color: greenyellow;
+}
+
+.style-item
+{
+    background-color: rgba(234, 226, 230, 0.6);
+    border: 2px solid rgba(225, 213, 219, 0.6);
+    padding: 5px 10px;
+    height: 40px;
+    width: auto;
+}
+
+.style-item-active
+{
+    background-color: greenyellow;
+}
+
+.page-content
+{
+    background-color: #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 100%;
+}
+
+.blog-content
+{
+
+}
+
+.blog-content-item
+{
+
+}
+
+/* COUPONS */
+.coupon-list
+{
+    flex-direction: column;
+    background-color: #e6e6e6;
+    width: 100%;
+}
+.coupon-list-item
+{
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100px;
+}
+
+.coupon-list-item>div
+{
+    flex-direction: column;
+}
+
+.coupon-list-item-name
+{
+    align-items: flex-start;
+    padding: 15px;
+}
+
+.coupon-list-item-functions
+{
+    align-items: flex-end;
+    padding: 15px;
+}
+
+.green
+{
+    background-color: #34ce57;
+}
+
+/* SETTINGS */
+
+.block
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.setting
+{
+    display: flex;
+    flex-direction: column;
+}

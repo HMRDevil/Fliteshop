@@ -1,0 +1,24 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Заказы{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_order') }}">Новые</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=1">Приняты</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=2">Выполнены</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=3">Удалены</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_label') }}">Метки</a></li>
+{% endblock page_menu_items %}
+
+{% block page_header %}
+    <a class="page-header-item" href="{{ path('admin_product_add') }}">Добавить заказ</a>
+    <form method="post" action="{{ path('admin_product') }}" class="page-header-item">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_product_search') }}">
+        <input class="search" type="search" name="search" value="{{ keywords }}">
+        <button class="search_button" type="submit">Поиск</button>
+    </form>
+{% endblock page_header %}
+
+{% block page_content %}
+    {{ dump(orders) }}
+{% endblock page_content %}

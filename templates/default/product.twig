@@ -1,0 +1,44 @@
+{% extends theme~'/index.twig' %}
+
+{% block title %}{{product.metaTitle}}{% endblock title %}
+
+{% block body %}
+    <div class="breadcrumbs">
+        <a class="breadcrumbs-link" href="{{ path('index') }}">Главная</a> &#8594
+        <a class="breadcrumbs-link" href="/catalog/{{ product.productCategories|first.category.url }}">{{ product.productCategories|first.category.name }}</a> &#8594
+        <a class="breadcrumbs-link" href="/catalog/{{ product.productCategories|first.category.url }}/{{ product.brand.name }}">{{ product.brand.name }}</a> &#8594 {{product.name}}
+    </div>
+    <article class="product-show">
+        <h1 class="product-show-name">{{ product.name }}</h1>
+        <div class="product-show-images">
+            {% if product.image|first %}
+            <img class="product-image-main" src="{{ asset('/upload/'~product.image|first.filename)}}">
+            {% endif %}
+            {% for image in product.image %}
+            <img class="product-image-other" src="{{ asset('/upload/'~image.filename)}}">
+            {% endfor %}
+        </div>
+        <div class="product-show-description">
+            {{ product.body|raw }}
+        </div>
+        <div class="product-show-variants">
+            <form class="product-show-price" method="post">
+                {% for variant in product.variant %}
+                    <label><input class="{% if product.variant|length == 1 %}hidden{% endif %}" type="radio" {% if product.variant|first %}checked {% endif %} name="variant" value="{{ variant.id }}"><span class="variant-name">{{ variant.name}}</span><span class="variant-price">{{ variant.price }}</span></label>
+                {% endfor %}
+                <input class="addtocard" type="submit" value="В корзину">
+            </form>
+        </div>
+        <section class="product-show-features">
+            <h2>Характеристики:</h2>
+            <table>
+                {% for option in product.options %}
+                <tr>
+                    <td>{{ option.feature.name }}</td>
+                    <td>{{ option.value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </article>
+{% endblock body %}

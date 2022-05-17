@@ -1,0 +1,21 @@
+{% extends '@admin/index.twig' %}
+
+{% block title %}Дизайн{% endblock title%}
+
+{% block page_menu_items %}
+    <li class="page-menu-item active"><a href="{{ path('admin_design') }}">Темы</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_template') }}">Шаблоны</a></li>
+    <li class="page-menu-item"><a href="{{ path('admin_style') }}">Стили</a></li>
+{% endblock page_menu_items %}
+
+{% block page_content %}
+    <form method="post" action="{{ path('admin_design') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('design') }}">
+        <select name="theme">
+        {% for theme in allThemes %}
+            <option value='{{ theme }}' {% if installed == theme %}selected{% endif %}>{{ theme }}</option>
+        {% endfor %}
+        </select>
+        <button type="submit">Установить</button>
+    </form>
+{% endblock page_content %}

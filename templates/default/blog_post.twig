@@ -1,0 +1,27 @@
+{% extends theme~'/index.twig' %}
+
+{% block title %}
+    {{ page.metaTitle }}
+{% endblock title%}
+
+{% block body %}
+    <article class="blog-post">
+        <H1>{{ page.name }}</h1>
+        <p class="blog-post-date">{{ page.date|date('d.m.Y') }}</p>
+        <p class="blog-post-text">{{ page.text|raw}}</p>
+    </article>
+    <section class="comments">
+        {% for comment in blogPageComments %}
+            <h2>Комментарии</h2>
+            <div class="public-comment">
+                <p class="comment-name">{{ comment.name }} {{ comment.date|date('d.m.Y, H:i') }}<p>
+                <p class="comment-text">{{ comment.text }}<p>
+            </div>
+        {% endfor %}
+        {{ form_start(commentForm) }}
+        {{ form_row(commentForm.name, {'label': 'Ваше имя: '}) }}
+        {{ form_row(commentForm.text, {'label': 'Ваш комментарий: '}) }}
+        <button type="submit">Отправить</button>
+        {{ form_end(commentForm) }}
+    </section>
+{% endblock body%}

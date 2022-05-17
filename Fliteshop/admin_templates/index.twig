@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}FliteShop CMS Admin{% endblock title%}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <link href="{{ asset('admin/css/main.css') }}" rel="stylesheet" type="text/css">
+        {% endblock stylesheets %}
+
+        {% block javascripts %}
+            
+        {% endblock javascripts %}
+    </head>
+    <body>
+        <header class="header">
+            <div class="header-logo">
+                <a href="{{ path('admin') }}">
+                    <img class="logo" src="{{ asset('../admin/images/logo.svg') }}" alt="Logotipe">
+                    <b class="logo-caption">FliteShop CMS</b>
+                </a>
+            </div>
+            <a class="header-link" href="{{ path('products') }}" target="_blank">К магазину</a>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-menu-item"><a href="{{ path('admin_product') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/catalog.png') }}" alt="Каталог"><b>Каталог</b></a></li>
+                    <li class="nav-menu-item"><a href="{{ path('admin_order') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/orders.png') }}" alt="Заказы"><b>Заказы</b></a></li>
+                    <li class="nav-menu-item"><a href=""><img class="menu-item-img" src="{{ asset('../admin/images/menu/users.png') }}" alt="Покупатели"><b>Покупатели</b></a></li>
+                    <li class="nav-menu-item"><a href=""><img class="menu-item-img" src="{{ asset('../admin/images/menu/pages.png') }}" alt="Страницы"><b>Страницы</b></a></li>
+                    <li class="nav-menu-item"><a href="{{ path('admin_blog') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/blog.png') }}" alt="Блог"><b>Блог</b></a></li>
+                    <li class="nav-menu-item"><a href="{{ path('admin_comment') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/comments.png') }}" alt="Комментарии"><b>Комментарии</b></a></li>
+                    <li class="nav-menu-item"><a href="{{ path('admin_design') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/design.png') }}" alt="Дизайн"><b>Дизайн</b></a></li>
+                    <li class="nav-menu-item"><a href="{{ path('admin_setting') }}"><img class="menu-item-img" src="{{ asset('../admin/images/menu/settings.png') }}" alt="Настройки"><b>Настройки</b></a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="wrapper">
+            <nav class="page-menu">
+                <ul>
+                {% block page_menu_items %}{% endblock page_menu_items %}
+                </ul>
+            </nav>
+            <header class="page-header">
+            {% block page_header %}{% endblock page_header %}
+            </header>
+            <div class="page-content">
+            {% block page_content %}{% endblock page_content %}
+            </div>
+        </div>
+    </body>
+</html>
