@@ -2,8 +2,8 @@
 
 namespace App\Component\Node;
 
-use App\Interfaces\NodeInterface;
-use App\Interfaces\ArrayableInterface;
+use App\Component\Interfaces\NodeInterface;
+use App\Component\Interfaces\ArrayableInterface;
 use App\Component\Node\CategoryNode;
 
 class CategoryNodeBuilder implements NodeInterface, ArrayableInterface

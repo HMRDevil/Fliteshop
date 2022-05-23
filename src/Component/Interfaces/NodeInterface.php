@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Component\Interfaces;
 
 interface NodeInterface
 {
