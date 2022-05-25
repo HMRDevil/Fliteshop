@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Traits;
 
 /**
  * @method Label|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class LabelRepository extends ServiceEntityRepository
 {
+    use Traits\DeletionTrait;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Label::class);
@@ -43,6 +46,14 @@ class LabelRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+    
+    public function allOrderByPosition()
+    {
+        return $this->_em->createQuery('SELECT l
+                FROM App\Entity\Label l
+                ORDER BY l.position ASC')
+                ->getResult();
     }
 
     // /**
