@@ -191,7 +191,7 @@ class Order
      *
      * @ORM\Column(name="modified", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $modified = 'CURRENT_TIMESTAMP';
+    private $modified;
 
     public function getId(): ?string
     {

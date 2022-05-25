@@ -5,17 +5,27 @@ namespace App\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\LabelRepository;
 use App\Repository\OrderRepository;
+use App\Form\OrderType;
 use App\Entity\Order;
 
 class AdminOrderController extends AbstractController
 {
+    private $paginator;
     private $repository;
-    
-    public function __construct(OrderRepository $repository)
-    {
+    private $labelRepo;
+
+    public function __construct(
+            PaginatorInterface $paginator,
+            OrderRepository $repository,
+            LabelRepository $labelRepo
+    ) {
+        $this->paginator = $paginator;
         $this->repository = $repository;
+        $this->labelRepo = $labelRepo;
     }
     
     /**
@@ -23,9 +33,26 @@ class AdminOrderController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        if (null === $request->get('status'))
+        {
+            $qb = $this->repository->getQBOrderPager(null, 0);
+        } else {
+            $qb = $this->repository->getQBOrderPager(null, $request->get('status'));
+        }
+        
+        if ($this->isCsrfTokenValid('admin_order_search', $request->request->get('_token')))
+        {
+            $qb = $this->repository->getQBOrderPager($request->request->get('search'));
+        }
+        
+        $page = $request->query->get('page', 1);
+        $pagination = $this->paginator->paginate($qb, $page, 25);
+        
         return $this->render('@admin/orders.twig', [
-            'orders' => $this->repository->findBy(['status' => $request->get('status')??Order::ORDER_STATUS_NEW]),
+            'pagination' => $pagination,
             'keywords' => $request->get('keywords'),
+            'status' => $request->get('status')??0,
+            'labels' => $this->labelRepo->allOrderByPosition(),
         ]);
     }
     

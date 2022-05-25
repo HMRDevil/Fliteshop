@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Traits;
 
 /**
  * @method Order|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OrderRepository extends ServiceEntityRepository
 {
+    use Traits\DeletionTrait;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Order::class);
@@ -43,6 +46,22 @@ class OrderRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+    
+    public function getQBOrderPager($keywords = null, int $status)
+    {
+        $qb = $this->createQueryBuilder('o');
+        if(isset($status))
+        {
+            $qb->where('o.status = :status')
+                    ->setParameter('status', $status);
+        }
+        if(isset($keywords))
+        {
+            $qb->andWhere('o.name LIKE :keywords OR o.phone LIKE :keywords OR o.address LIKE :keywords')
+                    ->setParameter('keywords', "%$keywords%");
+        }
+        return $qb;
     }
 
     // /**

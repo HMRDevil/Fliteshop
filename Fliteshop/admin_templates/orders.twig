@@ -3,22 +3,51 @@
 {% block title %}Заказы{% endblock title%}
 
 {% block page_menu_items %}
-    <li class="page-menu-item active"><a href="{{ path('admin_order') }}">Новые</a></li>
-    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=1">Приняты</a></li>
-    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=2">Выполнены</a></li>
-    <li class="page-menu-item"><a href="{{ path('admin_order') }}?status=3">Удалены</a></li>
+    <li class="page-menu-item {% if status==0 %} active{% endif %}"><a href="{{ path('admin_order') }}">Новые</a></li>
+    <li class="page-menu-item {% if status==1 %} active{% endif %}"><a href="{{ path('admin_order') }}?status=1">Приняты</a></li>
+    <li class="page-menu-item {% if status==2 %} active{% endif %}"><a href="{{ path('admin_order') }}?status=2">Выполнены</a></li>
+    <li class="page-menu-item {% if status==3 %} active{% endif %}"><a href="{{ path('admin_order') }}?status=3">Удалены</a></li>
     <li class="page-menu-item"><a href="{{ path('admin_label') }}">Метки</a></li>
 {% endblock page_menu_items %}
 
 {% block page_header %}
-    <a class="page-header-item" href="{{ path('admin_product_add') }}">Добавить заказ</a>
-    <form method="post" action="{{ path('admin_product') }}" class="page-header-item">
-        <input type="hidden" name="_token" value="{{ csrf_token('admin_product_search') }}">
-        <input class="search" type="search" name="search" value="{{ keywords }}">
+    <a class="page-header-item" href="{{ path('admin_order_add') }}">Добавить заказ</a>
+    <form method="post" action="{{ path('admin_order') }}" class="page-header-item">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_order_search') }}">
+        <input class="search" type="search" placeholder="ФИО, адрес, телефон" name="search" value="{{ keywords }}">
         <button class="search_button" type="submit">Поиск</button>
     </form>
 {% endblock page_header %}
 
 {% block page_content %}
-    {{ dump(orders) }}
+    {{ knp_pagination_render(pagination) }}
+    
+    <form class="page-content" method="post" action="{{ path('admin_order_action') }}" onsubmit="return confirm('Подтвердите действие');">
+        <input type="hidden" name="_token" value="{{ csrf_token('action_checked') }}">
+        {% for order in pagination %}
+            <div class="order-content">
+                <input type="checkbox" name="orders[]" value="{{ order.id }}">
+                <img src="">
+                <a href="{{ path('admin_order_edit', {id: order.id}) }}">{{ order.name }}</a>
+                <div class="adm_functions">
+                    <a class="adm_delete" href="{{ path('admin_order_delete', {id: order.id}) }}">Удалить</a>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        <select name="action">
+                <option value="status_1">В принятые</option>
+                <option value="status_2">В выполненные</option>
+                {% for label in labels %}
+                <option value="set_label_{{ label.id }}">Отметить &laquo;{{ label.name }}&raquo;</option>
+                {% endfor %}
+                {% for label in labels %}
+                <option value="unset_label_{{ label.id }}">Снять &laquo;{{ label.name }}&raquo;</option>
+                {% endfor %}
+                <option value="delete">Удалить выбранные заказы</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+        
+    {{ knp_pagination_render(pagination) }}
 {% endblock page_content %}
