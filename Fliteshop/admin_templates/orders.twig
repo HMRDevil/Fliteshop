@@ -36,8 +36,8 @@
             <br>
         {% endfor %}
         <select name="action">
-                <option value="status_1">В принятые</option>
-                <option value="status_2">В выполненные</option>
+                <option value="assepted">В принятые</option>
+                <option value="completed">В выполненные</option>
                 {% for label in labels %}
                 <option value="set_label_{{ label.id }}">Отметить &laquo;{{ label.name }}&raquo;</option>
                 {% endfor %}

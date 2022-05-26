@@ -98,9 +98,9 @@ class AdminOrderController extends AbstractController
     /**
      * @Route("/admin/order_delete/{id}", name="admin_order_delete", methods={"GET"})
      */
-    public function delete(Order $order, OrderRepository $repository): Response
+    public function delete(Order $order): Response
     {
-        $repository->remove($order);
+        $this->repository->setStatus([$order->getId()], Order::ORDER_STATUS_DELETED);
 
         return $this->redirectToRoute('admin_order');
     }
@@ -108,14 +108,41 @@ class AdminOrderController extends AbstractController
     /**
      * @Route("/admin/order_action", name="admin_order_action", methods={"POST"})
      */
-    public function action(Request $request, OrderRepository $repository): Response
+    public function action(Request $request): Response
     {
         if ($this->isCsrfTokenValid('action_checked', $request->request->get('_token')) and is_array($request->request->get('orders')))
         {
+            $action_lenght = strlen($request->request->get('action'));
+            if ($action_lenght > 9)
+            {
+                $setter = explode('_', $request->request->get('action'))[2];
+            }
             switch ($request->request->get('action'))
             {
+                case 'assepted':
+                    $this->repository->setStatus($request->request->get('orders'), Order::ORDER_STATUS_ASSEPTED);
+                    break;
+                case 'completed':
+                    $this->repository->setStatus($request->request->get('orders'), Order::ORDER_STATUS_COMPLETED);
+                    break;
                 case 'delete':
-                    $repository->delete($request->request->get('orders'));
+                    $this->repository->setStatus($request->request->get('orders'), Order::ORDER_STATUS_DELETED);
+                    break;
+                case "set_label_$setter":
+                    $orders = $this->repository->findBy(['id' => $request->request->get('orders')]);
+                    $label = $this->labelRepo->find($setter);
+                    foreach ($orders as $order) {
+                        $order->addLabel($label);
+                        $this->repository->add($order);
+                    }
+                    break;
+                case "unset_label_$setter":
+                    $orders = $this->repository->findBy(['id' => $request->request->get('orders')]);
+                    $label = $this->labelRepo->find($setter);
+                    foreach ($orders as $order) {
+                        $order->removeLabel($label);
+                        $this->repository->add($order);
+                    }
                     break;
             }
         }

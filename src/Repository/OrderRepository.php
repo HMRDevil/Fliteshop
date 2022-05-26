@@ -63,6 +63,15 @@ class OrderRepository extends ServiceEntityRepository
         }
         return $qb;
     }
+    
+    public function setStatus(array $ids, int $status)
+    {
+        $this->_em->createQuery('UPDATE ' . $this->_entityName . ' o SET o.status = :status WHERE o.id IN (:ids)')
+                    ->setParameter('ids', $ids)
+                    ->setParameter('status', $status)
+                    ->getResult();
+        $this->_em->flush();
+    }
 
     // /**
     //  * @return Order[] Returns an array of Order objects

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,8 +19,6 @@ class Order
     public const ORDER_STATUS_DELETED = 3;
     
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -26,172 +26,135 @@ class Order
     private $id;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="delivery_id", type="integer", nullable=true)
      */
     private $deliveryId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="delivery_price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
     private $deliveryPrice = '0.00';
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="payment_method_id", type="integer", nullable=true)
      */
     private $paymentMethodId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="paid", type="integer", nullable=false)
      */
     private $paid;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="payment_date", type="datetime", nullable=false)
      */
     private $paymentDate;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="closed", type="boolean", nullable=false)
      */
     private $closed;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="user_id", type="integer", nullable=true)
      */
     private $userId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="address", type="string", length=255, nullable=false)
      */
     private $address;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="phone", type="string", length=255, nullable=false)
      */
     private $phone;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="comment", type="string", length=1024, nullable=false)
      */
     private $comment;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="status", type="integer", nullable=false)
      */
     private $status;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="payment_details", type="text", length=65535, nullable=false)
      */
     private $paymentDetails;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ip", type="string", length=15, nullable=false)
      */
     private $ip;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="total_price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
     private $totalPrice = '0.00';
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="note", type="string", length=1024, nullable=false)
      */
     private $note;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="discount", type="decimal", precision=5, scale=2, nullable=false, options={"default"="0.00"})
      */
     private $discount = '0.00';
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="coupon_discount", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
     private $couponDiscount = '0.00';
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="coupon_code", type="string", length=255, nullable=false)
      */
     private $couponCode;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="separate_delivery", type="integer", nullable=false)
      */
     private $separateDelivery;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="modified", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $modified;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Label::class, inversedBy="orders")
+     * @ORM\JoinTable(name="s_orders_labels")
+     */
+    private $label;
+
+    public function __construct()
+    {
+        $this->label = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -482,6 +445,30 @@ class Order
     public function setModified(\DateTimeInterface $modified): self
     {
         $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Label>
+     */
+    public function getLabel(): Collection
+    {
+        return $this->label;
+    }
+
+    public function addLabel(Label $label): self
+    {
+        if (!$this->label->contains($label)) {
+            $this->label[] = $label;
+        }
+
+        return $this;
+    }
+
+    public function removeLabel(Label $label): self
+    {
+        $this->label->removeElement($label);
 
         return $this;
     }
