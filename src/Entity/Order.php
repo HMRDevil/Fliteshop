@@ -33,7 +33,7 @@ class Order
     /**
      * @ORM\Column(name="delivery_price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $deliveryPrice = '0.00';
+    private $deliveryPrice;
 
     /**
      * @ORM\Column(name="payment_method_id", type="integer", nullable=true)
@@ -113,7 +113,7 @@ class Order
     /**
      * @ORM\Column(name="total_price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $totalPrice = '0.00';
+    private $totalPrice;
 
     /**
      * @ORM\Column(name="note", type="string", length=1024, nullable=false)
@@ -123,12 +123,12 @@ class Order
     /**
      * @ORM\Column(name="discount", type="decimal", precision=5, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $discount = '0.00';
+    private $discount;
 
     /**
      * @ORM\Column(name="coupon_discount", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $couponDiscount = '0.00';
+    private $couponDiscount;
 
     /**
      * @ORM\Column(name="coupon_code", type="string", length=255, nullable=false)

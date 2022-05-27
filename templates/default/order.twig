@@ -1,0 +1,160 @@
+{% extends theme~'/index.twig' %}
+
+{% block title %}Ваш заказ №{{order.id}}{% endblock title %}
+
+{% block body %}
+    <h1>Ваш заказ №{{order.id}}
+        {% if order.status == 0 %}принят
+        {% elseif order.status == 1 %}в обработке
+        {% elseif order.status == 2 %}выполнен{% endif %}
+        {% if order.paid == 1 %}, оплачен{% endif %}
+    </h1>
+
+    <table class="purchases">
+        {% for purchase in purchases %}
+        <tr>
+                {# Изображение товара #}
+            <td class="image">
+                {% if purchase.product.image|first %}
+                <a href="{{ path('product', {url: purchase.product.url}) }}"><img src="upload/{{ purchase.product.image|first.filename }}" alt="{{ purchase.product.name|escape }}"></a>
+                {% endif %}
+            </td>
+                {# Название товара #}
+            <td class="name">
+                <a href="{{ path('product', {url: purchase.product.url}) }}">{{ purchase.productName|escape }}</a>
+                {{ purchase.variantName|escape }}
+                {% if order.paid and purchase.variant.attachment %}
+                <a class="download_attachment" href="order/{$order->url}/{$purchase->variant->attachment}">скачать файл</a>
+                {% endif %}
+            </td>
+                {# Цена за единицу #}
+            <td class="price">
+                {{ purchase.price }}&nbsp;{{ currency.sign }}
+            </td>
+                {# Количество #}
+            <td class="amount">
+                &times; {{ purchase.amount }}&nbsp;{$settings->units}
+            </td>
+                {# Цена #}
+            <td class="price">
+                {{ purchase.price*purchase.amount }}&nbsp;{{ currency.sign }}
+            </td>
+        </tr>
+        {% endfor %}
+        {% if order.discount > 0 %}
+        <tr>
+            <th class="image"></th>
+            <th class="name">скидка</th>
+            <th class="price"></th>
+            <th class="amount"></th>
+            <th class="price">{{ order.discount }}&nbsp;%</th>
+        </tr>
+        {% endif %}
+        {% if order.couponDiscount >0 %}
+        <tr>
+            <th class="image"></th>
+            <th class="name">купон</th>
+            <th class="price"></th>
+            <th class="amount"></th>
+            <th class="price">&minus;{{ order.couponDiscount }}&nbsp; {{ currency.sign }}</th>
+        </tr>
+        {% endif %}
+        {% if order.separateDelivery and order.deliveryPrice > 0 %}
+        <tr>
+            <td class="image"></td>
+            <td class="name">{$delivery->name|escape}</td>
+            <td class="price"></td>
+            <td class="amount"></td>
+            <td class="price">{{ order.deliveryPrice }}&nbsp; {{ currency.sign }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th class="image"></th>
+            <th class="name">итого</th>
+            <th class="price"></th>
+            <th class="amount"></th>
+            <th class="price">{{ order.totalPrice }}&nbsp;{{ currency.sign }}</th>
+        </tr>
+        {% if order.separateDelivery %}
+        <tr>
+            <td class="image"></td>
+            <td class="name">{$delivery->name|escape}</td>
+            <td class="price"></td>
+            <td class="amount"></td>
+            <td class="price">{{ order.deliveryPrice }}&nbsp; {{ currency.sign }}</td>
+        </tr>
+        {% endif %}
+    </table>
+    
+    <h2>Детали заказа</h2>
+    <table class="order_info">
+        <tr>
+            <td>Дата заказа</td>
+            <td>{{ order.date|date('d.m.Y') }} в {{ order.date|date('H:i') }}</td>
+        </tr>
+        {% if order.name %}
+        <tr>
+            <td>Имя</td>
+            <td>{{ order.name|escape }}</td>
+        </tr>
+        {% endif %}
+        {% if order.email %}
+        <tr>
+            <td>Email</td>
+            <td>{{ order.email|escape }}</td>
+        </tr>
+        {% endif %}
+        {% if order.phone %}
+        <tr>
+            <td>Телефон</td>
+            <td>{{ order.phone|escape }}</td>
+        </tr>
+        {% endif %}
+        {% if order.address %}
+        <tr>
+            <td>Адрес доставки</td>
+            <td>{{ order.address|escape }}</td>
+        </tr>
+        {% endif %}
+        {% if order.comment %}
+        <tr>
+            <td>Комментарий</td>
+            <td>{{ order.comment|escape|nl2br }}</td>
+        </tr>
+        {% endif %}
+</table>
+
+{% if order.paid == 0 %}
+    {% if payment_methods and payment_method is null and order.totalPrice > 0 %}
+<form method="post">
+<h2>Выберите способ оплаты</h2>
+<ul id="deliveries">
+    {% for payment_method in payment_methods %}
+    <li>
+        <div class="checkbox">
+            <input type="radio" name="payment_method_id" value="{{ payment_method.id }}" {% if payment_methods|first %}checked{% endif %} id="payment_{{ payment_method.id }}">
+        </div>
+        <h3>
+            {#<label for="payment_{{ payment_method.id }}">{{ payment_method.name }}, к оплате {{ order.totalPrice/payment_method.currencyId }}&nbsp;{{ currencies[payment_method.currencyId].sign }}</label>#}
+        </h3>
+            <div class="description">{{ payment_method.description|raw }}</div>
+    </li>
+    {% endfor %}
+</ul>
+<input type="submit" class="button" value="Закончить заказ">
+</form>
+    {% elseif payment_method %}
+<h2>Способ оплаты &mdash; {{ payment_method.name }}
+<form method="post">
+    <input type="submit" name="reset_payment_method" value="Выбрать другой способ оплаты">
+</form>
+</h2>
+<p>{{ payment_method.description }}</p>
+<h2>К оплате {{ order.total_price/payment_method.currencyId }}&nbsp;{{ currencies[payment_method.currencyId].sign }}</h2>
+
+{checkout_form order_id=$order->id module=$payment_method->module}
+    {% endif %}
+{% endif %}
+
+
+{% endblock body %}
