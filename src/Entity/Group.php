@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Group
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,18 +19,14 @@ class Group
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="discount", type="decimal", precision=5, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $discount = '0.00';
+    private $discount;
 
     public function getId(): ?int
     {

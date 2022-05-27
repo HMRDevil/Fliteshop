@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Currency
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,57 +19,41 @@ class Currency
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="sign", type="string", length=20, nullable=false)
      */
     private $sign;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="code", type="string", length=3, nullable=false, options={"fixed"=true})
      */
     private $code;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="rate_from", type="decimal", precision=10, scale=2, nullable=false, options={"default"="1.00"})
      */
-    private $rateFrom = '1.00';
+    private $rateFrom;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="rate_to", type="decimal", precision=10, scale=2, nullable=false, options={"default"="1.00"})
      */
-    private $rateTo = '1.00';
+    private $rateTo;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="cents", type="integer", nullable=false, options={"default"="2"})
      */
-    private $cents = 2;
+    private $cents;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="enabled", type="integer", nullable=false)
      */
     private $enabled;

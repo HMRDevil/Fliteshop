@@ -15,8 +15,6 @@ class Comment
     const BLOG_TYPE = 'blog';
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,50 +22,36 @@ class Comment
     private $id;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $date = 'CURRENT_TIMESTAMP';
+    private $date;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ip", type="string", length=20, nullable=false)
      */
     private $ip;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="object_id", type="integer", nullable=false)
      */
     private $objectId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="text", type="text", length=65535, nullable=false)
      */
     private $text;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="type", type="integer", nullable=false)
      */
     private $type;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="approved", type="integer", nullable=false)
      */
     private $approved;

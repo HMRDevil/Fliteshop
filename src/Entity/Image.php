@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Image
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,30 +19,22 @@ class Image
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var int
-     *
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="image")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="filename", type="string", length=255, nullable=false)
      */
     private $filename;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;

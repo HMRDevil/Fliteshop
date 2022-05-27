@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Variant
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,57 +25,41 @@ class Variant
     private $product;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="sku", type="string", length=255, nullable=false)
      */
     private $sku;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="price", type="decimal", precision=14, scale=2, nullable=false, options={"default"="0.00"})
      */
     private $price;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="compare_price", type="decimal", precision=14, scale=2, nullable=true)
      */
     private $comparePrice;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="stock", type="integer", nullable=true)
      */
     private $stock;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="attachment", type="string", length=255, nullable=false)
      */
     private $attachment;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="external_id", type="string", length=36, nullable=false)
      */
     private $externalId;

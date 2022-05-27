@@ -92,7 +92,7 @@ class Product
     private $variant;
     
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", fetch="EAGER")
      */
     private $image;
     

@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class DeliveryPayment
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="delivery_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -21,8 +19,6 @@ class DeliveryPayment
     private $deliveryId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="payment_method_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

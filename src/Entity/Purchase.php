@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Purchase
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,57 +19,42 @@ class Purchase
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="order_id", type="integer", nullable=false)
+     * @ORM\OneToOne(targetEntity=Order::class, cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="order_id", nullable=false)
      */
     private $orderId;
-
+    
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="product_id", type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity=Product::class, cascade={"persist", "remove"}, fetch="EAGER")
      */
-    private $productId;
+    private $product;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="variant_id", type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity=Variant::class, cascade={"persist", "remove"}, fetch="EAGER")
      */
-    private $variantId;
+    private $variant;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="product_name", type="string", length=255, nullable=false)
      */
     private $productName;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="variant_name", type="string", length=255, nullable=false)
      */
     private $variantName;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $price = '0.00';
+    private $price;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="amount", type="integer", nullable=false)
      */
     private $amount;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="sku", type="string", length=255, nullable=false)
      */
     private $sku;
@@ -81,38 +64,38 @@ class Purchase
         return $this->id;
     }
 
-    public function getOrderId(): ?int
+    public function getOrderId(): ?Order
     {
         return $this->orderId;
     }
 
-    public function setOrderId(int $orderId): self
+    public function setOrderId(Order $orderId): self
     {
         $this->orderId = $orderId;
 
         return $this;
     }
 
-    public function getProductId(): ?int
+    public function getProduct(): ?Product
     {
-        return $this->productId;
+        return $this->product;
     }
 
-    public function setProductId(?int $productId): self
+    public function setProduct(?Product $product): self
     {
-        $this->productId = $productId;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getVariantId(): ?int
+    public function getVariant(): ?Variant
     {
-        return $this->variantId;
+        return $this->variant;
     }
 
-    public function setVariantId(?int $variantId): self
+    public function setVariant(?Variant $variant): self
     {
-        $this->variantId = $variantId;
+        $this->variant = $variant;
 
         return $this;
     }

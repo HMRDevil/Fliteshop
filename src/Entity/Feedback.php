@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Feedback
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,36 +19,26 @@ class Feedback
     private $id;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     private $date;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="ip", type="string", length=20, nullable=false)
      */
     private $ip;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="message", type="text", length=65535, nullable=false)
      */
     private $message;

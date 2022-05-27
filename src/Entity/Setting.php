@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Setting
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="setting_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,15 +19,11 @@ class Setting
     private $settingId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="value", type="text", length=65535, nullable=false)
      */
     private $value;

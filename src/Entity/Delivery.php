@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Delivery
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,50 +19,36 @@ class Delivery
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      */
     private $description;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="free_from", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $freeFrom = '0.00';
+    private $freeFrom;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $price = '0.00';
+    private $price;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
     private $enabled;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
 
     /**
-     * @var int|null
-     *
      * @ORM\Column(name="separate_payment", type="integer", nullable=true)
      */
     private $separatePayment;

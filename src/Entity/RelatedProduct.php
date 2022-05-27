@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class RelatedProduct
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="product_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -21,8 +19,6 @@ class RelatedProduct
     private $productId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="related_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -30,8 +26,6 @@ class RelatedProduct
     private $relatedId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;

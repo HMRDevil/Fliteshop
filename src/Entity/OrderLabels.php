@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderLabels
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="order_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -21,8 +19,6 @@ class OrderLabels
     private $orderId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="label_id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

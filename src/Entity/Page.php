@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Page
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,85 +19,61 @@ class Page
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
      */
     private $url;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_title", type="string", length=500, nullable=false)
      */
     private $metaTitle;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_description", type="string", length=500, nullable=false)
      */
     private $metaDescription;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_keywords", type="string", length=500, nullable=false)
      */
     private $metaKeywords;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="body", type="text", length=0, nullable=false)
      */
     private $body;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="menu_id", type="integer", nullable=false)
      */
     private $menuId;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
     private $visible;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="header", type="string", length=1024, nullable=false)
      */
     private $header;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="new_field", type="string", length=255, nullable=true)
      */
     private $newField;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="new_field2", type="string", length=255, nullable=true)
      */
     private $newField2;

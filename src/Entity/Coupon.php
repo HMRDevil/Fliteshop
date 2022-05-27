@@ -15,8 +15,6 @@ class Coupon
     const COUPON_PERCENTAGE = 'percentage';
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,50 +22,36 @@ class Coupon
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="code", type="string", length=256, nullable=false)
      */
     private $code;
 
     /**
-     * @var \DateTime|null
-     *
      * @ORM\Column(name="expire", type="date", nullable=true)
      */
     private $expire;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="type", type="text", nullable=false)
      */
     private $type;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="value", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
      */
-    private $value = '0.00';
+    private $value;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(name="min_order_price", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $minOrderPrice;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="single", type="integer", nullable=false)
      */
     private $single;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="usages", type="integer", nullable=false)
      */
     private $usages;
@@ -160,6 +144,4 @@ class Coupon
 
         return $this;
     }
-
-
 }

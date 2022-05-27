@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Blog
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,64 +19,46 @@ class Blog
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=500, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
      */
     private $url;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_title", type="string", length=500, nullable=false)
      */
     private $metaTitle;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_keywords", type="string", length=500, nullable=false)
      */
     private $metaKeywords;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="meta_description", type="string", length=500, nullable=false)
      */
     private $metaDescription;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="annotation", type="text", length=65535, nullable=false)
      */
     private $annotation;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="text", type="text", length=0, nullable=false)
      */
     private $text;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="visible", type="boolean", nullable=false)
      */
     private $visible;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $date;

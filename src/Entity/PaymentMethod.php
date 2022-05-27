@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class PaymentMethod
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,50 +19,36 @@ class PaymentMethod
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="module", type="string", length=255, nullable=false)
      */
     private $module;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      */
     private $description;
 
     /**
-     * @var float
-     *
      * @ORM\Column(name="currency_id", type="float", precision=10, scale=0, nullable=false)
      */
     private $currencyId;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="settings", type="text", length=65535, nullable=false)
      */
     private $settings;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(name="enabled", type="boolean", nullable=false)
      */
     private $enabled;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
