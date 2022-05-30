@@ -54,10 +54,10 @@ class OrderController extends AbstractController
             'brands' => $this->setting->brands(),
             'order' => $order,
             'purchases' => $this->purchaseRepo->findBy(['orderId' => $order->getId()]),
-            'currency' => $this->currencyRepo->find($order->getDeliveryId()),
+            'currency' => $this->currencyRepo->find($order->getDelivery()),
             'currencies' => $this->currencyRepo->findAll(),
             'payment_methods' => $this->paymentMethodRepo->findAll(),
-            'payment_method' => $this->paymentMethodRepo->find($order->getPaymentMethodId()),
+            'payment_method' => $this->paymentMethodRepo->find($order->getPaymentMethod()),
         ]);
     }
 }

@@ -125,7 +125,7 @@
 </table>
 
 {% if order.paid == 0 %}
-    {% if payment_methods and payment_method is null and order.totalPrice > 0 %}
+    {% if payment_methods and payment_method and order.totalPrice > 0 %}
 <form method="post">
 <h2>Выберите способ оплаты</h2>
 <ul id="deliveries">
@@ -135,7 +135,7 @@
             <input type="radio" name="payment_method_id" value="{{ payment_method.id }}" {% if payment_methods|first %}checked{% endif %} id="payment_{{ payment_method.id }}">
         </div>
         <h3>
-            {#<label for="payment_{{ payment_method.id }}">{{ payment_method.name }}, к оплате {{ order.totalPrice/payment_method.currencyId }}&nbsp;{{ currencies[payment_method.currencyId].sign }}</label>#}
+            <label for="payment_{{ payment_method.id }}">{{ payment_method.name }}, к оплате {{ order.totalPrice/payment_method.currency.id }}&nbsp;{{ payment_method.currency.sign }}</label>
         </h3>
             <div class="description">{{ payment_method.description|raw }}</div>
     </li>

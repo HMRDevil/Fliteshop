@@ -26,9 +26,9 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(name="delivery_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Delivery::class, inversedBy="orders")
      */
-    private $deliveryId;
+    private $delivery;
 
     /**
      * @ORM\Column(name="delivery_price", type="decimal", precision=10, scale=2, nullable=false, options={"default"="0.00"})
@@ -36,9 +36,9 @@ class Order
     private $deliveryPrice;
 
     /**
-     * @ORM\Column(name="payment_method_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity=PaymentMethod::class, inversedBy="orders")
      */
-    private $paymentMethodId;
+    private $paymentMethod;
 
     /**
      * @ORM\Column(name="paid", type="integer", nullable=false)
@@ -161,14 +161,14 @@ class Order
         return $this->id;
     }
 
-    public function getDeliveryId(): ?int
+    public function getDelivery(): ?Delivery
     {
-        return $this->deliveryId;
+        return $this->delivery;
     }
 
-    public function setDeliveryId(?int $deliveryId): self
+    public function setDelivery(?Delivery $delivery): self
     {
-        $this->deliveryId = $deliveryId;
+        $this->delivery = $delivery;
 
         return $this;
     }
@@ -185,14 +185,14 @@ class Order
         return $this;
     }
 
-    public function getPaymentMethodId(): ?int
+    public function getPaymentMethod(): ?PaymentMethod
     {
-        return $this->paymentMethodId;
+        return $this->paymentMethod;
     }
 
-    public function setPaymentMethodId(?int $paymentMethodId): self
+    public function setPaymentMethod(?PaymentMethod $paymentMethod): self
     {
-        $this->paymentMethodId = $paymentMethodId;
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }

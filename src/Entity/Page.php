@@ -49,9 +49,10 @@ class Page
     private $body;
 
     /**
-     * @ORM\Column(name="menu_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="pages")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $menuId;
+    private $menu;
 
     /**
      * @ORM\Column(name="position", type="integer", nullable=false)
@@ -67,16 +68,6 @@ class Page
      * @ORM\Column(name="header", type="string", length=1024, nullable=false)
      */
     private $header;
-
-    /**
-     * @ORM\Column(name="new_field", type="string", length=255, nullable=true)
-     */
-    private $newField;
-
-    /**
-     * @ORM\Column(name="new_field2", type="string", length=255, nullable=true)
-     */
-    private $newField2;
 
     public function getId(): ?int
     {
@@ -155,14 +146,14 @@ class Page
         return $this;
     }
 
-    public function getMenuId(): ?int
+    public function getMenu(): ?Menu
     {
-        return $this->menuId;
+        return $this->menu;
     }
 
-    public function setMenuId(int $menuId): self
+    public function setMenu(?Menu $menu): self
     {
-        $this->menuId = $menuId;
+        $this->menu = $menu;
 
         return $this;
     }
@@ -199,30 +190,6 @@ class Page
     public function setHeader(string $header): self
     {
         $this->header = $header;
-
-        return $this;
-    }
-
-    public function getNewField(): ?string
-    {
-        return $this->newField;
-    }
-
-    public function setNewField(?string $newField): self
-    {
-        $this->newField = $newField;
-
-        return $this;
-    }
-
-    public function getNewField2(): ?string
-    {
-        return $this->newField2;
-    }
-
-    public function setNewField2(?string $newField2): self
-    {
-        $this->newField2 = $newField2;
 
         return $this;
     }

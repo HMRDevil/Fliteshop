@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PaymentMethodRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,9 +36,10 @@ class PaymentMethod
     private $description;
 
     /**
-     * @ORM\Column(name="currency_id", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\ManyToOne(targetEntity=Currency::class, inversedBy="paymentMethods")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $currencyId;
+    private $currency;
 
     /**
      * @ORM\Column(name="settings", type="text", length=65535, nullable=false)
@@ -52,6 +55,16 @@ class PaymentMethod
      * @ORM\Column(name="position", type="integer", nullable=false)
      */
     private $position;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="paymentMethod")
+     */
+    private $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -94,14 +107,14 @@ class PaymentMethod
         return $this;
     }
 
-    public function getCurrencyId(): ?float
+    public function getCurrency(): ?Currency
     {
-        return $this->currencyId;
+        return $this->currency;
     }
 
-    public function setCurrencyId(float $currencyId): self
+    public function setCurrency(?Currency $currency): self
     {
-        $this->currencyId = $currencyId;
+        $this->currency = $currency;
 
         return $this;
     }
@@ -138,6 +151,36 @@ class PaymentMethod
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setPaymentMethod($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getPaymentMethod() === $this) {
+                $order->setPaymentMethod(null);
+            }
+        }
 
         return $this;
     }

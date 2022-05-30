@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CurrencyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,6 +59,16 @@ class Currency
      * @ORM\Column(name="enabled", type="integer", nullable=false)
      */
     private $enabled;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PaymentMethod::class, mappedBy="currency")
+     */
+    private $paymentMethods;
+
+    public function __construct()
+    {
+        $this->paymentMethods = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -155,6 +167,36 @@ class Currency
     public function setEnabled(int $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PaymentMethod>
+     */
+    public function getPaymentMethods(): Collection
+    {
+        return $this->paymentMethods;
+    }
+
+    public function addPaymentMethod(PaymentMethod $paymentMethod): self
+    {
+        if (!$this->paymentMethods->contains($paymentMethod)) {
+            $this->paymentMethods[] = $paymentMethod;
+            $paymentMethod->setCurrency($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentMethod(PaymentMethod $paymentMethod): self
+    {
+        if ($this->paymentMethods->removeElement($paymentMethod)) {
+            // set the owning side to null (unless already changed)
+            if ($paymentMethod->getCurrency() === $this) {
+                $paymentMethod->setCurrency(null);
+            }
+        }
 
         return $this;
     }
