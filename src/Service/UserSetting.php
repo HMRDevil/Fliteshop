@@ -10,6 +10,7 @@ use App\Component\Node\CategoryNodeBuilder;
 class UserSetting
 {
     private $themeName;
+    private $units;
     private $allBrands;
     private $categories;
     private $categoryRepo;
@@ -22,6 +23,7 @@ class UserSetting
             CategoryNodeBuilder $categoryNodeBuilder
     ) {
         $this->themeName = $repository->findOneBy(['name' => 'theme'])->getValue();
+        $this->units = $repository->findOneBy(['name' => 'units'])->getValue();
         $this->allBrands = $brandRepo->findAll();
         $this->categories = $categoryNodeBuilder->build($categoryRepo->findBy(['visible' => true]));
         $this->brandRepo = $brandRepo;
@@ -31,6 +33,11 @@ class UserSetting
     public function usedTheme(): string
     {
         return $this->themeName;
+    }
+    
+    public function units()
+    {
+        return $this->units;
     }
     
     public function brands()
