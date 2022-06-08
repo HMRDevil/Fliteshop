@@ -48,16 +48,17 @@ class OrderController extends AbstractController
         return $this->render($this->setting->usedTheme() . '/order.twig', [
             'keywords' => '',
             'recommended' => $this->productRepo->recommended(),
-            'thing' => $thing = $this->productRepo->thing(),
+            'thing' => $this->productRepo->thing(),
             'stock' => $this->productRepo->stock(),
             'categories' => $this->setting->categories()->list(),
             'brands' => $this->setting->brands(),
             'order' => $order,
             'purchases' => $this->purchaseRepo->findBy(['orderId' => $order->getId()]),
-            'currency' => $this->currencyRepo->find($order->getDelivery()),
             'currencies' => $this->currencyRepo->findAll(),
-            'payment_methods' => $this->paymentMethodRepo->findAll(),
+            'currency' => $this->currencyRepo->findOneBy(['position' => 1]),
+            'payment_methods' => $this->paymentMethodRepo->orderByPosition(),
             'payment_method' => $this->paymentMethodRepo->find($order->getPaymentMethod()),
+            'units' => $this->setting->units(),
         ]);
     }
 }

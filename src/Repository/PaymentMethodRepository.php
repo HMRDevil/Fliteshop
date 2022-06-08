@@ -44,6 +44,16 @@ class PaymentMethodRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    
+    public function orderByPosition()
+    {
+        return $this->_em->createQueryBuilder()
+                ->select('pm')
+                ->from($this->getClassName(), 'pm')
+                ->orderBy('pm.position')
+                ->getQuery()
+                ->getResult();
+    }
 
     // /**
     //  * @return PaymentMethod[] Returns an array of PaymentMethod objects

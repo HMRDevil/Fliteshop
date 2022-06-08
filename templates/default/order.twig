@@ -24,7 +24,7 @@
                 <a href="{{ path('product', {url: purchase.product.url}) }}">{{ purchase.productName|escape }}</a>
                 {{ purchase.variantName|escape }}
                 {% if order.paid and purchase.variant.attachment %}
-                <a class="download_attachment" href="order/{$order->url}/{$purchase->variant->attachment}">скачать файл</a>
+                <a class="download_attachment" href="order/{{ order.url }}/{$purchase->variant->attachment}">скачать файл</a>
                 {% endif %}
             </td>
                 {# Цена за единицу #}
@@ -33,7 +33,7 @@
             </td>
                 {# Количество #}
             <td class="amount">
-                &times; {{ purchase.amount }}&nbsp;{$settings->units}
+                &times; {{ purchase.amount }}&nbsp;{{ units }}
             </td>
                 {# Цена #}
             <td class="price">
@@ -135,7 +135,7 @@
             <input type="radio" name="payment_method_id" value="{{ payment_method.id }}" {% if payment_methods|first %}checked{% endif %} id="payment_{{ payment_method.id }}">
         </div>
         <h3>
-            <label for="payment_{{ payment_method.id }}">{{ payment_method.name }}, к оплате {{ order.totalPrice/payment_method.currency.id }}&nbsp;{{ payment_method.currency.sign }}</label>
+            <label for="payment_{{ payment_method.id }}">{{ payment_method.name }}, к оплате {{ order.totalPrice / payment_method.currency.rateTo * payment_method.currency.rateFrom }}&nbsp;{{ payment_method.currency.sign }}</label>
         </h3>
             <div class="description">{{ payment_method.description|raw }}</div>
     </li>
@@ -150,7 +150,7 @@
 </form>
 </h2>
 <p>{{ payment_method.description }}</p>
-<h2>К оплате {{ order.total_price/payment_method.currencyId }}&nbsp;{{ currencies[payment_method.currencyId].sign }}</h2>
+<h2>К оплате {{ order.totalPrice / payment_method.currency.rateTo * payment_method.currency.rateFrom }}&nbsp;{{ currencies[payment_method.currencyId].sign }}</h2>
 
 {checkout_form order_id=$order->id module=$payment_method->module}
     {% endif %}
